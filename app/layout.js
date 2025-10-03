@@ -5,11 +5,12 @@ import { League_Spartan } from "next/font/google";
 import "./globals.css";
 
 export const metadata = {
-  title: "PropertyLynk | Find  the Perfect Rental",
-  description: "Find your dream rental property",
-  keywords: "rental, find rentals, find properties",
-};
-
+  title: "NewsPilot | AI-Powered Tech News & Insights",
+   description:
+    "Stay ahead with NewsPilot – your personal AI-powered newsroom delivering the latest technology news, trends, and insights in real time.",
+  keywords:
+    "NewsPilot, AI News, Tech News, AI-powered newsroom, latest technology updates, LLM pipelines, real-time news, machine learning news, artificial intelligence trends",
+}
 const MainLayout = ({ children }) => {
   return (
     <html lang="en" className={`${leagueSpartan.variable}`}>

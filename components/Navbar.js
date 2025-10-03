@@ -35,16 +35,16 @@ export default function Navbar() {
                 pathname === "/" ? "text-blue-600 font-bold" : "text-gray-700 hover:text-blue-500"
               }`}
             >
-              Latest
+              Latest News
             </Link>
-            <Link
+            {/* <Link
               href="/saved"
               className={`${
                 pathname === "/saved" ? "text-blue-600 font-bold" : "text-gray-700 hover:text-blue-500"
               }`}
             >
               Saved
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>
