@@ -10,20 +10,17 @@ const container = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2, // delay between each card
+      staggerChildren: 0.15,
     },
   },
 };
 
 const item = {
-  hidden: { x: -60, opacity: 0 }, // start from the left side
+  hidden: { y: 24, opacity: 0 },
   show: {
-    x: 0,
+    y: 0,
     opacity: 1,
-    transition: {
-      duration: 0.6,
-      ease: 'easeOut',
-    },
+    transition: { duration: 0.45, ease: "easeOut" },
   },
 };
 
@@ -44,7 +41,7 @@ export default function StoryList({ stories }) {
           <motion.div
             key={story.id}
             variants={item}
-            className="bg-white rounded-lg shadow hover:shadow-md transition p-4"
+            className="bg-white rounded-lg shadow hover:shadow-md transition p-4 overflow-hidden"
           >
             <div className="relative w-full h-40">
               <Image

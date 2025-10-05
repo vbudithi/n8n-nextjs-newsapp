@@ -27,17 +27,17 @@ export default function HeroSection({ story }) {
         </h2>
       </Link>
 
-      {story.excerpt && (
+      {story.summary && (
         <p className="text-gray-600 text-base md:text-lg line-clamp-3">
-          {story.excerpt}
+          {story.summary} 
         </p>
       )}
 
-      {story.content && (
+      {/* {story.content && (
         <p className="text-gray-600 text-base md:text-lg line-clamp-3">
           {story.content}
         </p>
-      )}
+      )} */}
 
       {story.published_at && (
         <p className="text-sm text-gray-500">{story.published_at}</p>

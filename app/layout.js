@@ -1,7 +1,9 @@
+
 import React from "react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar"
 import { League_Spartan } from "next/font/google";
+import ScrollToTop from "@/components/ScrollToTop"
 import "./globals.css";
 
 export const metadata = {
@@ -17,6 +19,7 @@ const MainLayout = ({ children }) => {
       <body className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">{children}</main>
+        <ScrollToTop />  
        <Footer />
       </body>
     </html>
