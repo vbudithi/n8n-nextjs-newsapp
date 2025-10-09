@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+:root {
+  --font-brand: system-ui;
+}
+
+.font-brand {
+  font-family: var(--font-brand), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
