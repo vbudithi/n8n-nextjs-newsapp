@@ -23,7 +23,7 @@ export default function StoryCard({ story }) {
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-            priority={false}
+            priority
           />
         ) : (
           <div className="absolute inset-0 bg-gray-100" />

@@ -49,7 +49,7 @@ export default function HeroSection({ story }) {
             className="block"
           >
             {/* fixed aspect to prevent CLS */}
-            <div className="relative aspect-[21/9] md:aspect-[5/3] lg:max-w-[95%] mx-auto">
+            <div className="relative w-full h-[260px] md:h-[340px] lg:h-[340px] rounded-lg overflow-hidden">
               <Image
                 src={story.image_url}
                 alt={story.title}
@@ -58,7 +58,7 @@ export default function HeroSection({ story }) {
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
             </div>
             <div className="absolute left-3 top-3 flex gap-2">
               <span className="rounded-full bg-black/70 px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-white">

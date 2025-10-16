@@ -6,6 +6,8 @@ import { supabase } from "@/app/lib/supabaseClient";
 import { DateModeProvider } from "@/components/DateModeProvider";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
+import { Archive } from "lucide-react";
+import MarketSidebar from "./MarketSidebar";
 
 export default function NewsFeed() {
   const [stories, setStories] = useState([]);
@@ -55,18 +57,42 @@ export default function NewsFeed() {
     );
   return (
     <DateModeProvider initial="absolute">
-      <div className="space-y-6 pt-30">
-        <SearchBar value={q} onChange={setQ} />
-        {topStory && <HeroSection story={topStory} />}
-        <StoryList stories={otherStories} />
-        <section className="m-auto max-w-lg my-10 px-6">
+      <div className="mx-auto max-w-7xl px-4 lg:px-6 pt-35 space-y-6">
+        {/* Search and Archive Button Container */}
+        <div className="flex items-center gap-3">
+          <div className="flex-1">
+            <SearchBar value={q} onChange={setQ} />
+          </div>
           <Link
             href="/articles"
-            className="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700 transition"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg whitespace-nowrap"
           >
-            View All News
+            <Archive className="h-5 w-5" />
+            More Articles
           </Link>
-        </section>
+        </div>
+        {/* LEFT: news content */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="lg:col-span-3 space-y-6">
+            {topStory && <HeroSection story={topStory} />}
+            <StoryList stories={otherStories} />
+
+            <section className="m-auto max-w-lg my-10 px-6">
+              <Link
+                href="/articles"
+                className="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700 transition"
+              >
+                View All News
+              </Link>
+            </section>
+          </div>
+          {/* RIGHT: sidebar */}
+          <div className="lg:col-span-1">
+            <div className="lg:sticky lg:top-40">
+              <MarketSidebar />
+            </div>
+          </div>
+        </div>
       </div>
     </DateModeProvider>
   );

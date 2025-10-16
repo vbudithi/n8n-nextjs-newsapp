@@ -20,8 +20,8 @@ const nextConfig: NextConfig = {
       'www.gizmodo.com',
       'blog.n8n.io'
     ],
-
   },
+
   // Optional: enable strict mode and future optimizations
   reactStrictMode: true,
 };
