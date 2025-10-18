@@ -15,7 +15,6 @@ export default function page() {
 
   useEffect(() => {
     const fetchOldNews = async () => {
-      const today = new Date().toISOString().slice(0, 10);
       const { data, error } = await supabase
         .from("tech_news")
         .select("*")
@@ -58,17 +57,16 @@ export default function page() {
             prefetch={false}
           >
             <ChevronLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
-            Back to Latest News
+            Back to Home
           </Link>
         </div>
       </section>
-
       <DateModeProvider initial="absolute">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 space-y-8">
           <div className="flex justify-center">
             <SearchBar value={q} onChange={setQ} />
           </div>
-          <StoryList stories={filtered} />
+          <StoryList stories={filtered} title="More Stories" />
         </div>
       </DateModeProvider>
     </>

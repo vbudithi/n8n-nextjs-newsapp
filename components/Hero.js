@@ -48,7 +48,6 @@ export default function HeroSection({ story }) {
             rel="noopener noreferrer"
             className="block"
           >
-            {/* fixed aspect to prevent CLS */}
             <div className="relative w-full h-[260px] md:h-[340px] lg:h-[340px] rounded-lg overflow-hidden">
               <Image
                 src={story.image_url}

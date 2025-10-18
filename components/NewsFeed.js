@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect, useMemo } from "react";
 import HeroSection from "@/components/Hero";
 import StoryList from "@/components/StoryList";
@@ -6,8 +7,8 @@ import { supabase } from "@/app/lib/supabaseClient";
 import { DateModeProvider } from "@/components/DateModeProvider";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
-import { Archive } from "lucide-react";
-import MarketSidebar from "./MarketSidebar";
+import { Newspaper, Layers } from "lucide-react";
+import CryptoComponent from "./CryptoComponent";
 
 export default function NewsFeed() {
   const [stories, setStories] = useState([]);
@@ -21,22 +22,25 @@ export default function NewsFeed() {
       const startOfDay = new Date(today + "T00:00:00Z").toISOString();
       const endOfDay = new Date(today + "T23:59:59Z").toISOString();
       console.log("⏳ Fetching news for:", today, startOfDay, endOfDay);
+
       const { data, error } = await supabase
         .from("tech_news")
         .select("*")
         .gte("published_at", startOfDay)
         .lte("published_at", endOfDay)
         .order("published_at", { ascending: false });
+
       console.log("🧪 Supabase data:", data);
+
       if (error) {
         console.error("❌ Error fetching news:", error);
       } else {
         console.log("✅ Fetched stories:", data);
-
         setStories(data || []);
       }
       setLoading(false);
     };
+
     fetchNews();
   }, [today]);
 
@@ -51,47 +55,53 @@ export default function NewsFeed() {
 
   if (loading)
     return <p className="text-center mt-10">Loading latest news...</p>;
+
   if (!stories.length)
     return (
       <p className="text-center mt-10 text-gray-500">No news available.</p>
     );
+
   return (
     <DateModeProvider initial="absolute">
-      <div className="mx-auto max-w-7xl px-4 lg:px-6 pt-35 space-y-6">
-        {/* Search and Archive Button Container */}
-        <div className="flex items-center gap-3">
+      <div className="mx-auto max-w-7xl px-4 lg:px-6 pt-35">
+        {/* Search and Article Button - Responsive Layout */}
+        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3">
           <div className="flex-1">
             <SearchBar value={q} onChange={setQ} />
           </div>
+
           <Link
             href="/articles"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg whitespace-nowrap"
+            className="inline-flex items-center justify-center gap-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 whitespace-nowrap md:whitespace-normal"
           >
-            <Archive className="h-5 w-5" />
-            More Articles
+            <Newspaper className="h-5 w-5" />
+            <span className="hidden md:inline">Discover Stories</span>
+            <span className="md:hidden">All News</span>
           </Link>
         </div>
-        {/* LEFT: news content */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-3 space-y-6">
-            {topStory && <HeroSection story={topStory} />}
-            <StoryList stories={otherStories} />
+        <div className="w-full overflow-x-auto">
+          <CryptoComponent />
+        </div>
 
-            <section className="m-auto max-w-lg my-10 px-6">
-              <Link
-                href="/articles"
-                className="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700 transition"
-              >
-                View All News
-              </Link>
-            </section>
-          </div>
-          {/* RIGHT: sidebar */}
-          <div className="lg:col-span-1">
-            <div className="lg:sticky lg:top-40">
-              <MarketSidebar />
-            </div>
-          </div>
+        {/* Articles Section */}
+        <div className="w-full space-y-6">
+          {topStory && <HeroSection story={topStory} />}
+          <StoryList
+            stories={otherStories}
+            title="Latest News"
+            columns="lg:grid-cols-3"
+          />
+
+          {/* View All News Button - Responsive */}
+          <section className="w-full my-10 px-4 md:px-6">
+            <Link
+              href="/articles"
+              className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-cyan-600 to-cyan-700 hover:from-cyan-700 hover:to-cyan-800 text-white font-semibold py-3 md:py-4 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+            >
+              <Layers className="h-5 w-5" />
+              Browse All News
+            </Link>
+          </section>
         </div>
       </div>
     </DateModeProvider>
