@@ -39,7 +39,7 @@ export default function CryptoComponent() {
         {cryptoData.map((coin) => (
           <div
             key={coin.name}
-            className="flex items-center gap-3 bg-white/80 dark:bg-neutral-800/50 backdrop-blur-sm rounded-xl p-4 border border-teal-200/50 dark:border-teal-700/50 hover:shadow-md transition flex-1"
+            className="flex items-center gap-3 bg-white/80  backdrop-blur-sm rounded-xl p-4 border border-teal-200/50  hover:shadow-md transition flex-1"
           >
             <Image
               src={coin.logo}
@@ -49,10 +49,8 @@ export default function CryptoComponent() {
               className="rounded-full flex-shrink-0"
             />
             <div className="flex flex-col">
-              <span className="font-semibold text-slate-900 dark:text-white">
-                {coin.name}
-              </span>
-              <span className="font-bold text-emerald-600 dark:text-emerald-400 text-sm">
+              <span className="font-semibold text-slate-900">{coin.name}</span>
+              <span className="font-bold text-emerald-600 text-sm">
                 {getCryptoValue(coin.value)
                   ? `$${getCryptoValue(coin.value).toFixed(2)}`
                   : "..."}
@@ -68,7 +66,7 @@ export default function CryptoComponent() {
           {cryptoData.map((coin) => (
             <div
               key={coin.name}
-              className="flex flex-col items-center gap-2 bg-white dark:bg-neutral-800 rounded-xl p-3 border border-teal-200/50 dark:border-teal-700/50 hover:shadow-md transition flex-shrink-0 w-24"
+              className="flex flex-col items-center gap-2 bg-white rounded-xl p-3 border border-teal-200/50 hover:shadow-md transition flex-shrink-0 w-24"
             >
               <Image
                 src={coin.logo}
@@ -77,10 +75,10 @@ export default function CryptoComponent() {
                 height={28}
                 className="rounded-full"
               />
-              <span className="font-semibold text-slate-900 dark:text-white text-xs text-center">
+              <span className="font-semibold text-slate-900 text-xs text-center">
                 {coin.name}
               </span>
-              <span className="font-bold text-emerald-600 dark:text-emerald-400 text-xs">
+              <span className="font-bold text-emerald-600 text-xs">
                 {getCryptoValue(coin.value)
                   ? `$${getCryptoValue(coin.value).toFixed(2)}`
                   : "..."}
