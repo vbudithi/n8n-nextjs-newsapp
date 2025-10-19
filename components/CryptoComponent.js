@@ -7,7 +7,7 @@ import xrplogo from "@/assets/images/xrp-logo.png";
 import solalogo from "@/assets/images/solana-logo.png";
 import { fetchCryptoData } from "@/utils/request";
 
-const CRYPTO_DATA = [
+const cryptoData = [
   { name: "Bitcoin", logo: bitlogo, value: "bitcoin" },
   { name: "Ethereum", logo: ethlogo, value: "ethereum" },
   { name: "Tether", logo: tetherlogo, value: "tether" },
@@ -36,7 +36,7 @@ export default function CryptoComponent() {
   return (
     <div className="w-full flex flex-col items-center justify-center py-4">
       <div className="hidden md:flex gap-4 w-full max-w-6xl justify-center">
-        {CryptoData.map((coin) => (
+        {cryptoData.map((coin) => (
           <div
             key={coin.name}
             className="flex items-center gap-3 bg-white/80 dark:bg-neutral-800/50 backdrop-blur-sm rounded-xl p-4 border border-teal-200/50 dark:border-teal-700/50 hover:shadow-md transition flex-1"
@@ -65,7 +65,7 @@ export default function CryptoComponent() {
       {/* Mobile View Card Layout */}
       <div className="md:hidden w-full overflow-x-scroll pb-4  ">
         <div className="flex gap-3 min-w-min px-4">
-          {CryptoData.map((coin) => (
+          {cryptoData.map((coin) => (
             <div
               key={coin.name}
               className="flex flex-col items-center gap-2 bg-white dark:bg-neutral-800 rounded-xl p-3 border border-teal-200/50 dark:border-teal-700/50 hover:shadow-md transition flex-shrink-0 w-24"
