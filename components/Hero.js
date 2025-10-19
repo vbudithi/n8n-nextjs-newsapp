@@ -1,6 +1,7 @@
 import Image from "next/image";
 import DateText from "./DateText";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const container = {
   hidden: { opacity: 0 },
@@ -25,10 +26,12 @@ const item = {
 };
 
 export default function HeroSection({ story }) {
+  const href = `/articles/${story?.id}` || "#";
   if (!story) return null;
 
   return (
     <motion.section
+      href={href}
       variants={container}
       initial="hidden"
       animate="show"
@@ -42,12 +45,7 @@ export default function HeroSection({ story }) {
           variants={item}
           className="group relative w-full overflow-hidden rounded-xl ring-1 ring-black/5"
         >
-          <a
-            href={story.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block"
-          >
+          <Link href={href} className="block">
             <div className="relative w-full h-[260px] md:h-[340px] lg:h-[340px] rounded-lg overflow-hidden">
               <Image
                 src={story.image_url}
@@ -69,18 +67,18 @@ export default function HeroSection({ story }) {
                 </span>
               )}
             </div>
-          </a>
+          </Link>
         </motion.div>
         <motion.div
           variants={item}
           className="flex flex-col justify-center gap-4"
         >
-          <a href={story.url} target="_blank" rel="noopener noreferrer">
-            <h2 className="text-2xl md:text-3xl font-extrabold leading-tight tracking-tight hover:underline decoration-2 underline-offset-4">
-              {story.title}
-            </h2>
-          </a>
-
+          <Link
+            href={href}
+            className="text-2xl md:text-3xl font-extrabold leading-tight tracking-tight hover:underline decoration-2 underline-offset-4"
+          >
+            {story.title}
+          </Link>
           {story.summary && (
             <p className="text-base md:text-lg text-slate-600 line-clamp-4">
               {story.summary}
@@ -97,14 +95,12 @@ export default function HeroSection({ story }) {
             )}
           </div>
           <div className="mt-2 flex flex-wrap gap-3">
-            <a
-              href={story.url}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href={href}
               className="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/60"
             >
               Read full story
-            </a>
+            </Link>
           </div>
         </motion.div>
       </motion.div>

@@ -39,7 +39,7 @@ export default function Navbar() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center space-x-4 h-12 items-center text-lg font-medium text-gray-850">
             <Newspaper className="h-5 w-5 text-gray-500" />
-            <span>Today’s News</span>
+            <span>Today’s News:</span>
             <DateText
               iso={new Date().toISOString()}
               className="!text-lg text-gray-500"

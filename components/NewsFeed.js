@@ -3,12 +3,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import HeroSection from "@/components/Hero";
 import StoryList from "@/components/StoryList";
-import { supabase } from "@/app/lib/supabaseClient";
 import { DateModeProvider } from "@/components/DateModeProvider";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
 import { Newspaper, Layers } from "lucide-react";
 import CryptoComponent from "./CryptoComponent";
+import { fetchNewArticlesByDateRange } from "@/utils/request";
 
 export default function NewsFeed() {
   const [stories, setStories] = useState([]);
@@ -22,25 +22,10 @@ export default function NewsFeed() {
       const startOfDay = new Date(today + "T00:00:00Z").toISOString();
       const endOfDay = new Date(today + "T23:59:59Z").toISOString();
       console.log("⏳ Fetching news for:", today, startOfDay, endOfDay);
-
-      const { data, error } = await supabase
-        .from("tech_news")
-        .select("*")
-        .gte("published_at", startOfDay)
-        .lte("published_at", endOfDay)
-        .order("published_at", { ascending: false });
-
-      console.log("🧪 Supabase data:", data);
-
-      if (error) {
-        console.error("❌ Error fetching news:", error);
-      } else {
-        console.log("✅ Fetched stories:", data);
-        setStories(data || []);
-      }
+      const data = await fetchNewArticlesByDateRange(startOfDay, endOfDay);
+      setStories(data || []);
       setLoading(false);
     };
-
     fetchNews();
   }, [today]);
 
@@ -64,7 +49,6 @@ export default function NewsFeed() {
   return (
     <DateModeProvider initial="absolute">
       <div className="mx-auto max-w-7xl px-4 lg:px-6 pt-35">
-        {/* Search and Article Button - Responsive Layout */}
         <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3">
           <div className="flex-1">
             <SearchBar value={q} onChange={setQ} />
@@ -75,15 +59,12 @@ export default function NewsFeed() {
             className="inline-flex items-center justify-center gap-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 whitespace-nowrap md:whitespace-normal"
           >
             <Newspaper className="h-5 w-5" />
-            <span className="hidden md:inline">Discover Stories</span>
-            <span className="md:hidden">All News</span>
+            <span className="md:inline">Discover More</span>
           </Link>
         </div>
         <div className="w-full overflow-x-auto">
           <CryptoComponent />
         </div>
-
-        {/* Articles Section */}
         <div className="w-full space-y-6">
           {topStory && <HeroSection story={topStory} />}
           <StoryList
@@ -91,8 +72,6 @@ export default function NewsFeed() {
             title="Latest News"
             columns="lg:grid-cols-3"
           />
-
-          {/* View All News Button - Responsive */}
           <section className="w-full my-10 px-4 md:px-6">
             <Link
               href="/articles"

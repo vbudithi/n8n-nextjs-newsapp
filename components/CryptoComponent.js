@@ -5,6 +5,7 @@ import ethlogo from "@/assets/images/ethereum-logo.png";
 import tetherlogo from "@/assets/images/tether-usdt-logo.png";
 import xrplogo from "@/assets/images/xrp-logo.png";
 import solalogo from "@/assets/images/solana-logo.png";
+import { fetchCryptoData } from "@/utils/request";
 
 const CRYPTO_DATA = [
   { name: "Bitcoin", logo: bitlogo, value: "bitcoin" },
@@ -16,39 +17,17 @@ const CRYPTO_DATA = [
 
 export default function CryptoComponent() {
   const [crypto, setCrypto] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCryptoData = async () => {
-      try {
-        console.log("🔄 [CRYPTO] Fetching crypto data...");
-        const res = await fetch(
-          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,ripple,solana&vs_currencies=usd"
-        );
-
-        if (!res.ok) {
-          console.error("❌ [CRYPTO] API Error:", res.status, res.statusText);
-          return;
-        }
-
-        const data = await res.json();
-
-        const cryptoData = {
-          bitcoin: data.bitcoin?.usd ?? null,
-          ethereum: data.ethereum?.usd ?? null,
-          tether: data.tether?.usd ?? null,
-          ripple: data.ripple?.usd ?? null,
-          solana: data.solana?.usd ?? null,
-        };
-
-        console.log("crypto data", cryptoData);
-
-        setCrypto(cryptoData);
-      } catch (error) {
-        console.error("❌ [CRYPTO] Error:", error.message);
-      }
+    setLoading(true);
+    const loadCrypto = async () => {
+      const data = await fetchCryptoData();
+      setCrypto(data || []);
+      setLoading(false);
     };
 
-    fetchCryptoData();
+    loadCrypto();
   }, []);
 
   const getCryptoValue = (key) => crypto[key];
@@ -56,9 +35,8 @@ export default function CryptoComponent() {
 
   return (
     <div className="w-full flex flex-col items-center justify-center py-4">
-      {/* Desktop Horizontal Card Layout */}
       <div className="hidden md:flex gap-4 w-full max-w-6xl justify-center">
-        {CRYPTO_DATA.map((coin) => (
+        {CryptoData.map((coin) => (
           <div
             key={coin.name}
             className="flex items-center gap-3 bg-white/80 dark:bg-neutral-800/50 backdrop-blur-sm rounded-xl p-4 border border-teal-200/50 dark:border-teal-700/50 hover:shadow-md transition flex-1"
@@ -84,10 +62,10 @@ export default function CryptoComponent() {
         ))}
       </div>
 
-      {/* Mobile Vertical Card Layout */}
+      {/* Mobile View Card Layout */}
       <div className="md:hidden w-full overflow-x-scroll pb-4  ">
         <div className="flex gap-3 min-w-min px-4">
-          {CRYPTO_DATA.map((coin) => (
+          {CryptoData.map((coin) => (
             <div
               key={coin.name}
               className="flex flex-col items-center gap-2 bg-white dark:bg-neutral-800 rounded-xl p-3 border border-teal-200/50 dark:border-teal-700/50 hover:shadow-md transition flex-shrink-0 w-24"

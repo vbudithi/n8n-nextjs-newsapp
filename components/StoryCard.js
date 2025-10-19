@@ -2,20 +2,21 @@
 import React from "react";
 import Image from "next/image";
 import DateText from "./DateText";
+import Link from "next/link";
 
 export default function StoryCard({ story }) {
-  const href = story?.url || "#";
+  const href = `/articles/${story?.id}` || "#";
 
   return (
-    <a
+    <Link
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+      // target="_blank"
+      // rel="noopener noreferrer"
       className="group block rounded-2xl bg-white ring-1 ring-black/5 shadow-sm
                  transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg
                  focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/60"
     >
-      <div className="relative aspect-[16/9] overflow-hidden rounded-t-2xl">
+      <div className="relative aspect-[16/9] overflow-hidden rounded-t-2xl cursor-pointer">
         {story?.image_url ? (
           <Image
             src={story.image_url}
@@ -51,6 +52,6 @@ export default function StoryCard({ story }) {
           )}
         </div>
       </div>
-    </a>
+    </Link>
   );
 }

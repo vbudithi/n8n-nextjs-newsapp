@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { supabase } from "@/app/lib/supabaseClient";
 import StoryList from "@/components/StoryList";
 import { DateModeProvider } from "@/components/DateModeProvider";
 import SearchBar from "@/components/SearchBar";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { fetchArticles } from "@/utils/request";
 
 export default function page() {
   const [stories, setStories] = useState([]);
@@ -15,17 +15,9 @@ export default function page() {
 
   useEffect(() => {
     const fetchOldNews = async () => {
-      const { data, error } = await supabase
-        .from("tech_news")
-        .select("*")
-        .order("published_at", { ascending: false });
-
-      if (error) {
-        console.error("❌ Error fetching news:", error);
-      } else {
-        console.log("✅ Old articles:", data);
-        setStories(data || []);
-      }
+      setLoading(true);
+      const data = await fetchArticles();
+      setStories(data || []);
       setLoading(false);
     };
     fetchOldNews();
