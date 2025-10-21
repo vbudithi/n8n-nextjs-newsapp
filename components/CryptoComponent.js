@@ -31,7 +31,6 @@ export default function CryptoComponent() {
   }, []);
 
   const getCryptoValue = (key) => crypto[key];
-  console.log("crypto", crypto);
 
   return (
     <div className="w-full flex flex-col items-center justify-center py-4">
@@ -39,7 +38,7 @@ export default function CryptoComponent() {
         {cryptoData.map((coin) => (
           <div
             key={coin.name}
-            className="flex items-center gap-3 bg-white/80  backdrop-blur-sm rounded-xl p-4 border border-teal-200/50  hover:shadow-md transition flex-1"
+            className="flex items-center gap-3 bg-white/80  backdrop-blur-sm rounded-xl p-4 border border-teal-200/50 dark:bg-amber-100 hover:shadow-md transition flex-1"
           >
             <Image
               src={coin.logo}

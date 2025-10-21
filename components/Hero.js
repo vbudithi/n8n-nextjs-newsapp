@@ -2,6 +2,7 @@ import Image from "next/image";
 import DateText from "./DateText";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import StoryTags from "./StoryTags";
 
 const container = {
   hidden: { opacity: 0 },
@@ -61,11 +62,6 @@ export default function HeroSection({ story }) {
               <span className="rounded-full bg-black/70 px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-white">
                 Top Story
               </span>
-              {story?.source && (
-                <span className="rounded-full bg-white/80 px-2 py-1 text-[10px] font-medium text-gray-700 ring-1 ring-black/10 backdrop-blur">
-                  {story.source}
-                </span>
-              )}
             </div>
           </Link>
         </motion.div>
@@ -84,6 +80,7 @@ export default function HeroSection({ story }) {
               {story.summary}
             </p>
           )}
+
           <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-slate-500">
             {story.published_at && (
               <DateText iso={story.published_at} toggle={true} />
@@ -94,13 +91,15 @@ export default function HeroSection({ story }) {
               </span>
             )}
           </div>
-          <div className="mt-2 flex flex-wrap gap-3">
+          <div className="mt-2 flex flex-wrap gap-6">
             <Link
               href={href}
               className="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/60"
             >
               Read full story
             </Link>
+
+            <StoryTags tags={story?.tags} />
           </div>
         </motion.div>
       </motion.div>

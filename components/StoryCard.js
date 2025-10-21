@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import DateText from "./DateText";
 import Link from "next/link";
+import StoryTags from "./StoryTags";
 
 export default function StoryCard({ story }) {
   const href = `/articles/${story?.id}` || "#";
@@ -10,13 +11,9 @@ export default function StoryCard({ story }) {
   return (
     <Link
       href={href}
-      // target="_blank"
-      // rel="noopener noreferrer"
-      className="group block rounded-2xl bg-white ring-1 ring-black/5 shadow-sm
-                 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg
-                 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/60"
+      className="group flex flex-col h-full rounded-2xl overflow-hidden shadow-sm bg-white"
     >
-      <div className="relative aspect-[16/9] overflow-hidden rounded-t-2xl cursor-pointer">
+      <div className="relative aspect-[16/9] overflow-hidden cursor-pointer">
         {story?.image_url ? (
           <Image
             src={story.image_url}
@@ -30,26 +27,18 @@ export default function StoryCard({ story }) {
           <div className="absolute inset-0 bg-gray-100" />
         )}
       </div>
-
-      {/* Content */}
-      <div className="p-4">
+      <div className="flex flex-col justify-between flex-grow p-3">
         <h4 className="text-base md:text-lg font-semibold leading-snug line-clamp-2 transition-colors group-hover:text-indigo-700">
           {story?.title}
         </h4>
 
-        {/* Meta row */}
-        <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
+        <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
           {story?.published_at ? (
             <DateText iso={story.published_at} />
           ) : (
             <span>&nbsp;</span>
           )}
-          {/* Optional source pill if you have it */}
-          {story?.source && (
-            <span className="rounded-full bg-gray-50 px-2 py-0.5 ring-1 ring-gray-200">
-              {story.source}
-            </span>
-          )}
+          <StoryTags tags={story?.tags} limit={2} />
         </div>
       </div>
     </Link>

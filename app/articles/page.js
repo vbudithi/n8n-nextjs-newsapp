@@ -23,7 +23,6 @@ export default function page() {
     fetchOldNews();
   }, []);
 
-  //search functionality
   const filtered = useMemo(() => {
     if (!q.trim()) return stories;
     const t = q.trim().toLowerCase();
@@ -41,18 +40,18 @@ export default function page() {
 
   return (
     <>
-      <section className="border-b border-gray-200">
-        <div className="container m-auto py-4 px-6 mt-32">
+      <div className="border-b border-gray-200 bg-white sticky top-0 z-40 pt-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-12">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200 group"
-            prefetch={false}
+            className="inline-flex items-center gap-2 text-gray-700 hover:bg-gray-100 rounded-lg transition font-medium "
           >
-            <ChevronLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
-            Back to Home
+            <ChevronLeft className="h-5 w-5" />
+            NewsPilot Home
           </Link>
         </div>
-      </section>
+      </div>
+
       <DateModeProvider initial="absolute">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 space-y-8">
           <div className="flex justify-center">

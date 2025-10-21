@@ -1,4 +1,5 @@
 import { supabase } from "@/app/lib/supabaseClient";
+import { Teachers } from "next/font/google";
 
 //fetch all articles in articles/page.js
 async function fetchArticles() {
@@ -6,13 +7,14 @@ async function fetchArticles() {
     const { data, error } = await supabase
       .from("tech_news")
       .select("*")
+      .not("tags", "is", null)
+      .neq("tags", "{}")
       .order("published_at", { ascending: false });
 
     if (error) {
       console.error("❌ Error fetching news:", error);
       return null;
     }
-    console.log("✅ Old articles:", data);
     return data || [];
   } catch (error) {
     console.error("❌ Error fetching news:", error.message);
@@ -32,7 +34,7 @@ async function fetchArticle(id) {
       console.error("❌ Error fetching article by ID:", error);
       return null;
     }
-    console.log("✅ Fetched article by ID:", data);
+    console.log("data", data);
     return data;
   } catch (error) {
     console.error("Unexpected error", error.message);
@@ -48,19 +50,21 @@ async function fetchNewArticlesByDateRange(startOfDay, endOfDay) {
       .select("*")
       .gte("published_at", startOfDay)
       .lte("published_at", endOfDay)
+      .not("tags", "is", null)
+      .neq("tags", "{}")
       .order("published_at", { ascending: false });
 
     if (error) {
       console.error("❌ Error fetching new articles:", error);
       return null;
     }
-    console.log("✅ Fetched new articles today:", data);
     return data;
   } catch (error) {
     console.error("Unexpected error", error.message);
     return null;
   }
 }
+
 //fetch crypto data in components/CryptoComponent.js
 async function fetchCryptoData() {
   try {
@@ -80,18 +84,45 @@ async function fetchCryptoData() {
       ripple: data.ripple?.usd ?? null,
       solana: data.solana?.usd ?? null,
     };
-
-    console.log("crypto data", cryptoData);
-
     return cryptoData;
   } catch (error) {
     console.error("❌ [CRYPTO] Error:", error.message);
     return null;
   }
 }
+
+//fetch articles by selected tags
+async function fetchArticlesByTags(selectedTags) {
+  try {
+    let query = supabase
+      .from("tech_news")
+      .select("*")
+      .not("tags", "is", null)
+      .neq("tags", "{}")
+      .order("published_at", { ascending: false });
+
+    if (selectedTags.length > 0) {
+      query = query.overlaps("tags", selectedTags);
+    }
+    const { data, error } = await query;
+    if (error) {
+      console.error("❌ Error fetching articles by tags:", error);
+      return null;
+    }
+    return data;
+  } catch (error) {
+    console.error(
+      "❌ Unexpected error fetching articles by tags:",
+      error.message
+    );
+    return null;
+  }
+}
+
 export {
   fetchArticles,
   fetchArticle,
   fetchNewArticlesByDateRange,
   fetchCryptoData,
+  fetchArticlesByTags,
 };

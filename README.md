@@ -12,13 +12,6 @@ This is a personal showcase project designed to demonstrate how modern web techn
 - Clean UI with React Icons
 - Seamless Search Experience
 
-If you want to go further, you could mention:
-
-- Debounced input for performance
-- Real-time filtering from Supabase
-- Keyboard accessibility
-  Let me know if you want help writing a short demo script or GIF caption to showcase it visually.
-
 ## 🛠️ Tech Stack
 
 - [Next.js](https://nextjs.org/) – React framework with App Router for routing and server-side rendering.
