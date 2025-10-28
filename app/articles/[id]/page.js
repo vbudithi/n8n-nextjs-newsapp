@@ -7,6 +7,7 @@ import Link from "next/link";
 import { fetchArticle } from "@/utils/request";
 import StoryTags from "@/components/StoryTags";
 import DateText from "@/components/DateText";
+import NewsletterWidget from "@/components/NewsletterWidget";
 import {
   ChevronLeft,
   ExternalLink,
@@ -34,7 +35,6 @@ export default function ArticlePage() {
       const id = params.id;
 
       const fetchedArticle = await fetchArticle(id);
-      console.log("fetchedArticle", fetchedArticle);
 
       if (!fetchedArticle) {
         setNotFound(true);
@@ -102,10 +102,13 @@ export default function ArticlePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading article...</p>
+      <div className="min-h-screen flex items-center justify-center pt-32 bg-gray-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-cyan-600 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-xl text-gray-700 font-semibold">
+            Loading NewsPilot
+          </p>
+          <p className="text-sm text-gray-500">Fetching latest news...</p>
         </div>
       </div>
     );
@@ -113,15 +116,21 @@ export default function ArticlePage() {
 
   if (notFound) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-        <h1 className="text-4xl font-bold mb-4 text-gray-900">404</h1>
-        <p className="text-lg text-gray-600 mb-8">Article not found</p>
+      <div className="flex gap-3">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-white border-2 border-gray-300 hover:border-blue-600 text-gray-700 hover:text-blue-600 font-semibold rounded-lg transition-all"
+        >
+          <Home className="h-5 w-5" />
+          Go Home
+        </Link>
+
         <Link
           href="/articles"
-          className="inline-flex items-center gap-2 text-gray-700 hover:bg-gray-100 rounded-lg transition font-medium"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg transition-all"
         >
-          <ChevronLeft className="h-5 w-5 sticky top-0 group-hover:-translate-x-1 transition-transform" />
-          Explore News
+          <Newspaper className="h-5 w-5" />
+          Browse Articles
         </Link>
       </div>
     );
@@ -129,30 +138,30 @@ export default function ArticlePage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="border-b border-gray-200 bg-white sticky top-0 z-40 pt-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-12">
+      <div className="border-b border-gray-200 bg-white sticky top-0 z-40 pt-9">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-13">
           <Link
             href="/articles"
-            className="inline-flex items-center gap-2 text-gray-700 hover:bg-gray-100 rounded-lg transition font-medium"
+            className="inline-flex items-center gap-2 text-blue-700 font-medium"
           >
-            <ChevronLeft className="h-5 w-5 sticky top-0 group-hover:-translate-x-1 transition-transform" />
+            <ChevronLeft className="h-5 w-5 sticky top-0" />
             Explore News
           </Link>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-9">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <article className="lg:col-span-3">
             {article?.image_url && (
-              <div className="relative w-full aspect-video overflow-hidden rounded-2xl mb-10 shadow-lg">
+              <div className="relative max-w-4xl mx-auto aspect-video overflow-hidden rounded-2xl mb-10 shadow-lg">
                 <Image
                   src={article.image_url}
                   alt={article.title}
                   fill
+                  loading="lazy"
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 66vw, 800px"
                   className="object-cover"
-                  priority
                 />
               </div>
             )}
@@ -229,19 +238,15 @@ export default function ArticlePage() {
               </p>
               <StoryTags tags={article?.tags} />
               <div className="border-t border-gray-200" />
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  <Share2 className="h-5 w-5" />
-                  Share Article
-                </h3>
-                <button
-                  onClick={() => setIsOpen(true)}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium cursor-pointer"
-                >
-                  <Share2 className="w-4 h-4" />
-                  Share
-                </button>
-              </div>
+              <button
+                onClick={() => setIsOpen(true)}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium cursor-pointer"
+              >
+                <Share2 className="w-4 h-4" />
+                Share
+              </button>
+
+              <NewsletterWidget />
             </div>
           </aside>
         </div>
@@ -254,7 +259,16 @@ export default function ArticlePage() {
           </Link>
         </div>
       </div>
+      {/* Sticky Floating Share */}
 
+      <div className="fixed bottom-6 right-6 z-50">
+        <button
+          onClick={() => setIsOpen(true)}
+          className="w-14 h-14 bg-blue-300/20 backdrop-blur-md border border-blue-500/40 text-blue-700 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 flex items-center justify-center cursor-pointer"
+        >
+          <Share2 className="w-5 h-5" />
+        </button>
+      </div>
       {/* Share Modal */}
       {isOpen && (
         <div
@@ -265,7 +279,6 @@ export default function ArticlePage() {
             className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform transition-all"
             onClick={(e) => e.stopPropagation()}
           >
-            {/*dialoge box */}
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-gray-900">
                 Share this article

@@ -6,10 +6,9 @@ import StoryList from "@/components/StoryList";
 import { DateModeProvider } from "@/components/DateModeProvider";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
-import { Newspaper, Layers } from "lucide-react";
+import { Newspaper, Layers, Home } from "lucide-react";
 import CryptoComponent from "./CryptoComponent";
 import { fetchNewArticlesByDateRange } from "@/utils/request";
-import DateText from "@/components/DateText";
 
 export default function NewsFeed() {
   const [stories, setStories] = useState([]);
@@ -22,7 +21,6 @@ export default function NewsFeed() {
       setLoading(true);
       const startOfDay = new Date(today + "T00:00:00Z").toISOString();
       const endOfDay = new Date(today + "T23:59:59Z").toISOString();
-      console.log("⏳ Fetching news for:", today, startOfDay, endOfDay);
       const data = await fetchNewArticlesByDateRange(startOfDay, endOfDay);
       setStories(data || []);
       setLoading(false);
@@ -38,54 +36,59 @@ export default function NewsFeed() {
 
   const topStory = filtered[0];
   const otherStories = filtered.slice(1);
-
-  if (loading)
-    return <p className="text-center mt-10">Loading latest news...</p>;
-
-  if (!stories.length)
+  // Show loading state
+  if (loading) {
     return (
-      <p className="text-center mt-10 text-gray-500">No news available.</p>
+      <div className="fixed inset-0 z-40 flex items-center justify-center bg-gray-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-cyan-600 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-xl text-gray-700 font-semibold">
+            Loading NewsPilot
+          </p>
+          <p className="text-sm text-gray-500">Fetching latest news...</p>
+        </div>
+      </div>
     );
+  }
 
   return (
     <>
       <DateModeProvider initial="absolute">
-        <div className="fixed top-20 left-0 w-full z-50 bg-gray-100 border-b border-gray-200">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-center space-x-4 h-12 items-center text-lg font-medium text-gray-850">
-              <Newspaper className="h-5 w-5 text-gray-500" />
-              <span>Today’s News:</span>
-              <DateText
-                iso={new Date().toISOString()}
-                className="!text-lg text-gray-500"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="mx-auto max-w-7xl px-4 lg:px-6 pt-35">
+        <div className="mx-auto max-w-7xl px-4 lg:px-6 pt-21">
           <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3">
             <div className="flex-1">
               <SearchBar value={q} onChange={setQ} />
             </div>
+
             <Link
               href="/articles"
-              className="inline-flex items-center justify-center gap-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 whitespace-nowrap md:whitespace-normal"
+              className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all shadow-lg hover:shadow-xl"
             >
               <Newspaper className="h-5 w-5" />
-              <span className="md:inline">Discover More</span>
+              <span>Discover More</span>
             </Link>
           </div>
-          <div className="w-full overflow-x-auto">
+          <div className="overflow-x-auto">
             <CryptoComponent />
           </div>
-          <div className="w-full space-y-6">
+
+          <div className="space-y-6">
             {topStory && <HeroSection story={topStory} />}
-            <StoryList
-              stories={otherStories}
-              title="Latest News"
-              columns="lg:grid-cols-3"
-            />
-            <section className="w-full my-10 px-4 md:px-6">
+            {filtered.length === 0 ? (
+              <div className="flex flex-col items-center gap-4 mt-10 max-w-md mx-auto">
+                <Newspaper className="h-5 w-5 text-gray-500" />
+                <p className="text-center text-gray-600 font-medium">
+                  Sorry, no articles were found.
+                </p>
+              </div>
+            ) : (
+              <StoryList
+                stories={otherStories}
+                title="Latest News"
+                columns="lg:grid-cols-3"
+              />
+            )}
+            <section className="my-10 px-4 md:px-6">
               <Link
                 href="/articles"
                 className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-cyan-600 to-cyan-700 hover:from-cyan-700 hover:to-cyan-800 text-white font-semibold py-3 md:py-4 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"

@@ -46,6 +46,7 @@ export default function CryptoComponent() {
               width={36}
               height={36}
               className="rounded-full flex-shrink-0"
+              loading="lazy"
             />
             <div className="flex flex-col">
               <span className="font-semibold text-slate-900">{coin.name}</span>
@@ -73,6 +74,7 @@ export default function CryptoComponent() {
                 width={28}
                 height={28}
                 className="rounded-full"
+                loading="lazy"
               />
               <span className="font-semibold text-slate-900 text-xs text-center">
                 {coin.name}

@@ -119,10 +119,30 @@ async function fetchArticlesByTags(selectedTags) {
   }
 }
 
+//fetch a single article by slug in app/articles/[slug]/page.js
+async function fetchArticleBySlug(slug) {
+  try {
+    const { data, error } = await supabase
+      .from("tech_news")
+      .select("*")
+      .eq("slug", slug)
+      .single();
+    if (error) {
+      console.error("❌ Error fetching article by slug:", error);
+      return null;
+    }
+    return data;
+  } catch (error) {
+    console.error("Unexpected error fetching article by slug:", error.message);
+    return null;
+  }
+}
+
 export {
   fetchArticles,
   fetchArticle,
   fetchNewArticlesByDateRange,
   fetchCryptoData,
   fetchArticlesByTags,
+  fetchArticleBySlug,
 };
