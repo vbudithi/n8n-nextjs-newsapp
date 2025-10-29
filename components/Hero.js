@@ -3,6 +3,7 @@ import DateText from "./DateText";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import StoryTags from "./StoryTags";
+import { SummaryHero } from "./SummaryComponent.js";
 
 const container = {
   hidden: { opacity: 0 },
@@ -75,11 +76,7 @@ export default function HeroSection({ story }) {
           >
             {story.title}
           </Link>
-          {story.summary && (
-            <p className="text-base md:text-lg text-slate-600 line-clamp-4">
-              {story.summary}
-            </p>
-          )}
+          {story.summary && <SummaryHero summary={story.summary} />}
 
           <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-slate-500">
             {story.published_at && (

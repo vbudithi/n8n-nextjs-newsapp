@@ -1,13 +1,12 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-console.log("API Key:", process.env.RESEND_API_KEY);
-console.log("Audience ID:", process.env.RESEND_AUDIENCE_ID);
-
 export async function POST(request) {
   try {
     const { email } = await request.json();
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    console.log("API Key:", process.env.RESEND_API_KEY);
+    console.log("Audience ID:", process.env.RESEND_AUDIENCE_ID);
     if (!email || !email.includes("@")) {
       return NextResponse.json(
         { error: "Valid email is required" },

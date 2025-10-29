@@ -1,9 +1,9 @@
-// StoryCard.jsx
 import React from "react";
 import Image from "next/image";
 import DateText from "./DateText";
 import Link from "next/link";
 import StoryTags from "./StoryTags";
+import { SummarySnippet } from "./SummaryComponent.js";
 
 export default function StoryCard({ story }) {
   const href = `/articles/${story?.id}` || "#";
@@ -31,8 +31,13 @@ export default function StoryCard({ story }) {
         <h4 className="text-base md:text-lg font-semibold leading-snug line-clamp-2 transition-colors group-hover:text-indigo-700">
           {story?.title}
         </h4>
+        {story?.summary && (
+          <div className="mt-2">
+            <SummarySnippet summary={story.summary} />
+          </div>
+        )}
 
-        <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
+        <div className="mt-5 flex items-center justify-between text-xs text-gray-500">
           {story?.published_at ? (
             <DateText iso={story.published_at} />
           ) : (

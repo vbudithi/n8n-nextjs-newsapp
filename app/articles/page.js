@@ -46,7 +46,7 @@ export default function page() {
   return (
     <div className="min-h-screen bg-white">
       <div className="border-b border-gray-200 bg-white sticky top-0 z-40 pt-9">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-10">
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-blue-700 font-medium "

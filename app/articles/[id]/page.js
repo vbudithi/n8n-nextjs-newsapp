@@ -8,6 +8,7 @@ import { fetchArticle } from "@/utils/request";
 import StoryTags from "@/components/StoryTags";
 import DateText from "@/components/DateText";
 import NewsletterWidget from "@/components/NewsletterWidget";
+import { SummarySection } from "@/components/SummaryComponent";
 import {
   ChevronLeft,
   ExternalLink,
@@ -167,27 +168,35 @@ export default function ArticlePage() {
             )}
 
             {/* Title & Date */}
-            <div className="mb-10">
+            <div className="mb-5">
               <h1 className="text-3xl md:text-4xl font-bold leading-tight text-gray-900 mb-6">
                 {article?.title}
               </h1>
 
-              <div className="flex flex-wrap items-center gap-4 text-gray-600 pb-6 border-b border-gray-200 mb-8">
-                {article?.published_at && (
-                  <div className="text-sm">
-                    <DateText iso={article.published_at} />
+              <div className="flex items-center justify-between text-gray-600 pb-6 border-b border-gray-200 mb-8">
+                <div className="flex items-center gap-4">
+                  {article?.published_at && (
+                    <div className="text-sm">
+                      <DateText iso={article.published_at} />
+                    </div>
+                  )}
+                </div>
+
+                {article?.url && (
+                  <div className="text-sm text-gray-500">
+                    Source:&nbsp;
+                    {article.source ||
+                      new URL(article.url).hostname
+                        .replace(/^www\./, "")
+                        .split(".")[0]}{" "}
                   </div>
                 )}
               </div>
 
-              {article?.summary && (
-                <p className="text-lg text-gray-700 leading-relaxed mb-8 font-medium">
-                  {article.summary}
-                </p>
-              )}
+              {article?.summary && <SummarySection summary={article.summary} />}
             </div>
 
-            {/* Summary and Source */}
+            {/* Source */}
             {article?.url && (
               <div className="mt-8 pt-8 border-t border-gray-200">
                 <a
