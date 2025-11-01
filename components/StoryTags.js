@@ -4,7 +4,7 @@ export default function StoryTags({ tags = [], limit = 4 }) {
   if (!Array.isArray(tags) || tags.length === 0) return null;
   const tagColorMap = {
     AI: "bg-purple-100 text-purple-700 hover:bg-purple-200",
-    "Software Development": "bg-blue-100 text-blue-700 hover:bg-blue-200",
+    Dev: "bg-blue-100 text-blue-700 hover:bg-blue-200",
     "Mobile Tech": "bg-teal-100 text-teal-700 hover:bg-teal-200",
     Startups: "bg-green-100 text-green-700 hover:bg-green-200",
     "Machine Learning": "bg-pink-100 text-pink-700 hover:bg-pink-200",

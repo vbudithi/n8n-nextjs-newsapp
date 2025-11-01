@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://newspilot.live
+
+# Sitemaps
+Sitemap: https://newspilot.live/sitemap.xml
