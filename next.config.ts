@@ -17,7 +17,8 @@ const nextConfig: NextConfig = {
       'www.engadget.com',
       'www.cnet.com',
       'www.techradar.com',
-      'www.gizmodo.com'
+      'www.gizmodo.com',
+      'bair.berkeley.edu'
     ],
   },
 

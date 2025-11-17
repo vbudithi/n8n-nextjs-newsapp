@@ -1,5 +1,4 @@
 import { supabase } from "@/app/lib/supabaseClient";
-import { Teachers } from "next/font/google";
 
 //fetch all articles in articles/page.js
 async function fetchArticles() {
@@ -35,6 +34,28 @@ async function fetchArticle(id) {
       return null;
     }
     console.log("data", data);
+    return data;
+  } catch (error) {
+    console.error("Unexpected error", error.message);
+    return null;
+  }
+}
+
+// Fetch articles in chunks as the user scrolls
+async function fetchArticlesChunk(start = 0, limit = 6) {
+  try {
+    const { data, error } = await supabase
+      .from("tech_news")
+      .select("*")
+      .not("tags", "is", null)
+      .neq("tags", "{}")
+      .order("published_at", { ascending: false })
+      .range(start, start + limit - 1);
+
+    if (error) {
+      console.error("❌ Error fetching new articles:", error);
+      return null;
+    }
     return data;
   } catch (error) {
     console.error("Unexpected error", error.message);
@@ -141,6 +162,7 @@ async function fetchArticleBySlug(slug) {
 export {
   fetchArticles,
   fetchArticle,
+  fetchArticlesChunk,
   fetchNewArticlesByDateRange,
   fetchCryptoData,
   fetchArticlesByTags,

@@ -45,7 +45,7 @@ export const metadata = {
       "Stay ahead with NewsPilot – your personal AI-powered newsroom delivering the latest technology news, trends, and insights in real time.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/newsapp_logo.png",
         width: 1200,
         height: 630,
         alt: "NewsPilot - AI-Powered Tech News",
@@ -73,7 +73,7 @@ export const metadata = {
 };
 const MainLayout = ({ children }) => {
   return (
-    <html lang="en" className={`${leagueSpartan.variable}`}>
+    <html lang="en" className={`${leagueSpartan.variable} dark`}>
       <body className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">{children}</main>
