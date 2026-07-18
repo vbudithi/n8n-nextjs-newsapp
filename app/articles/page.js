@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 import { DateModeProvider } from "@/components/DateModeProvider";
 import SearchBar from "@/components/SearchBar";
-import { ChevronLeft, Home, Newspaper, X } from "lucide-react";
+import { ChevronLeft, Home,House, Newspaper, X } from "lucide-react";
 import Link from "next/link";
 import { fetchArticlesChunk } from "@/utils/request";
 
@@ -82,9 +82,11 @@ export default function Page() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-10">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-blue-700 font-medium"
+            className=" inline-flex items-center gap-3 rounded-full bg-blue-50 px-5 py-3 text-blue-600
+                       font-semibold shadow-sm hover:bg-blue-100 transition-all duration-200"
           >
             <ChevronLeft className="h-5 w-5 sticky top-0" />
+            <Home className="w-6 h-6" />
             Home
           </Link>
         </div>

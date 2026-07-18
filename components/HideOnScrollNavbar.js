@@ -41,13 +41,13 @@ export default function ScrollNavbar() {
       >
         <nav>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="relative h-20 flex items-center">
-              <div className="flex flex-col items-center">
+            <div className="relative h-20 flex items-center justify-center">
+              <div className="flex flex-col items-center  ">
                 <Link href="/" className="inline-block">
                   <Image
                     src={logo}
                     alt="NewsPilot Logo"
-                    width={145}
+                    width={170}
                     height={145}
                     className="rounded-full object-contain"
                     loading="lazy"
