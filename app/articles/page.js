@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 import { DateModeProvider } from "@/components/DateModeProvider";
 import SearchBar from "@/components/SearchBar";
-import { Newspaper, X } from "lucide-react";
+import { Newspaper, X, Home } from "lucide-react";
 import HomeLink from "@/components/HomeLink";
 import Link from "next/link";
 import { fetchArticlesChunk } from "@/utils/request";
@@ -34,11 +34,17 @@ export default function Page() {
   const loadArticles = async () => {
     if (!hasMore || loadingMore) return;
     setLoadingMore(true);
-
     const newArticles = await fetchArticlesChunk(startIndex, chunkSize);
     setStories((prev) => [...prev, ...newArticles]);
     setStartIndex((prev) => prev + chunkSize);
+
+// Smooth skeleton delay
+  setTimeout(() => {
     setLoadingMore(false);
+  },600);
+  setTimeout(() => {
+  setInitialLoading(false);
+}, 500);
 
     if (newArticles.length < chunkSize) setHasMore(false);
     if (initialLoading) setInitialLoading(false); // first chunk loaded
@@ -53,6 +59,7 @@ export default function Page() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !loadingMore && hasMore) {
+          if (q.trim()) return; // ⛔ stop loading more when searching
           loadArticles();
         }
       },
@@ -115,26 +122,31 @@ export default function Page() {
                     href="/"
                     className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-white border-2 border-gray-300 hover:border-blue-600 text-gray-700 hover:text-blue-600 font-semibold rounded-lg transition-all"
                   >
-                    <Home className="h-5 w-5" />  
+                    <Home className="h-5 w-5" />
                     Go Home
                   </Link>
                 </div>
               </div>
             </div>
           ) : null}
+
+          {/* Main Story List */}
           <LazyStoryList
             stories={filtered}
             title="More Stories"
-            loading={loadingMore || initialLoading}
+            loading={ initialLoading}
           />
+
+          {loadingMore && !q.trim() && (
+            <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 mt-6">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="animate-pulse bg-gray-200 h-48 rounded-xl" />
+              ))}
+            </div>
+          )}
 
           {/* Infinite scroll trigger */}
           <div ref={loadMoreRef} className="h-10"></div>
-          {loadingMore && stories.length >= 6 && (
-            <p className="text-center text-gray-500 mt-4 animate-pulse">
-              Loading more articles...
-            </p>
-          )}
 
           {!hasMore && stories.length > 0 && (
             <p className="text-center text-gray-400 mt-4">No more articles</p>
