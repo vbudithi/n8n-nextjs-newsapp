@@ -68,7 +68,7 @@ export default function Page() {
     if (loadMoreRef.current) observer.observe(loadMoreRef.current);
 
     return () => observer.disconnect();
-  }, [loadingMore, hasMore]);
+  }, [loadingMore, hasMore, q]);
 
   if (initialLoading && stories.length === 0) {
     return (
