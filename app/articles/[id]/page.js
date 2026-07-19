@@ -10,7 +10,6 @@ import DateText from "@/components/DateText";
 import NewsletterWidget from "@/components/NewsletterWidget";
 import { SummarySection } from "@/components/SummaryComponent";
 import {
-  ChevronLeft,
   ExternalLink,
   Share2,
   Twitter,
@@ -20,7 +19,10 @@ import {
   X,
   Copy,
   Check,
+  LayoutGrid,
+  Home
 } from "lucide-react";
+import HomeLink from "@/components/HomeLink";
 
 export default function ArticlePage() {
   const params = useParams();
@@ -143,9 +145,10 @@ export default function ArticlePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-13">
           <Link
             href="/articles"
-            className="inline-flex items-center gap-2 text-blue-700 font-medium"
+            className="inline-flex items-center gap-3 rounded-full bg-blue-50 px-4 py-2 text-blue-600
+                       font-semibold shadow-sm hover:bg-blue-100 transition-all duration-200"
           >
-            <ChevronLeft className="h-5 w-5 sticky top-0" />
+              <LayoutGrid className="w-6 h-6" />
             Explore News
           </Link>
         </div>
@@ -260,12 +263,7 @@ export default function ArticlePage() {
           </aside>
         </div>
         <div className="border-t border-gray-200 mt-16 pt-8 text-center">
-          <Link
-            href="/"
-            className="text-blue-600 hover:text-blue-700 font-medium transition"
-          >
-            ← Back to NewsPilot
-          </Link>
+          <HomeLink />
         </div>
       </div>
       {/* Sticky Floating Share */}

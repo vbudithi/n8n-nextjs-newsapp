@@ -4,7 +4,8 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 import { DateModeProvider } from "@/components/DateModeProvider";
 import SearchBar from "@/components/SearchBar";
-import { ChevronLeft, Home,House, Newspaper, X } from "lucide-react";
+import { Newspaper, X } from "lucide-react";
+import HomeLink from "@/components/HomeLink";
 import Link from "next/link";
 import { fetchArticlesChunk } from "@/utils/request";
 
@@ -80,15 +81,7 @@ export default function Page() {
     <div className="min-h-screen bg-white">
       <div className="border-b border-gray-200 bg-white sticky top-0 z-40 pt-9">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-10">
-          <Link
-            href="/"
-            className=" inline-flex items-center gap-3 rounded-full bg-blue-50 px-5 py-3 text-blue-600
-                       font-semibold shadow-sm hover:bg-blue-100 transition-all duration-200"
-          >
-            <ChevronLeft className="h-5 w-5 sticky top-0" />
-            <Home className="w-6 h-6" />
-            Home
-          </Link>
+           <HomeLink />
         </div>
       </div>
 
@@ -122,7 +115,7 @@ export default function Page() {
                     href="/"
                     className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-white border-2 border-gray-300 hover:border-blue-600 text-gray-700 hover:text-blue-600 font-semibold rounded-lg transition-all"
                   >
-                    <Home className="h-5 w-5" />
+                    <Home className="h-5 w-5" />  
                     Go Home
                   </Link>
                 </div>
